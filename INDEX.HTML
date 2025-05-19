@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DRONZERS INC - Trading Physical Products</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0; padding: 0;
+    background: #f5f7fa;
+    color: #333;
+  }
+  header {
+    background: #0d47a1;
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0;
+  }
+  nav {
+    background: #1565c0;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+  nav a {
+    color: white;
+    margin: 0 1rem;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+  main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 1.5rem;
+  }
+  .product-card {
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .product-card img {
+    max-width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+  .product-card h3 {
+    margin: 0 0 0.5rem 0;
+  }
+  .product-card p {
+    flex-grow: 1;
+  }
+  .product-price {
+    font-weight: bold;
+    margin-top: 1rem;
+  }
+  .btn {
+    background: #0d47a1;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+    text-align: center;
+  }
+  .btn:hover {
+    background: #1565c0;
+  }
+  section.payment {
+    background: white;
+    padding: 1rem 2rem;
+    margin: 3rem auto;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  section.payment h2 {
+    text-align: center;
+  }
+  .paypal-button {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+  footer {
+    text-align: center;
+    padding: 1rem;
+    background: #0d47a1;
+    color: white;
+    margin-top: 3rem;
+  }
+  @media (max-width: 600px) {
+    nav {
+      flex-direction: column;
+    }
+    nav a {
+      margin: 0.5rem 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>DRONZERS INC</h1>
+  <p>Your One-Stop Shop for Printers, Drones, PlayStations & Clothes</p>
+</header>
+
+<nav>
+  <a href="#products">Products</a>
+  <a href="#payment">Payment</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<main>
+  <section id="products">
+    <h2>Our Products</h2>
+    <div class="products">
+
+      <div class="product-card">
+        <img src="https://via.placeholder.com/250x150?text=Printer" alt="Printer" />
+        <h3>High-Quality Printer</h3>
+        <p>Reliable and fast printer perfect for home and office use.</p>
+        <div class="product-price">₹12,500</div>
+        <button class="btn" onclick="addToCart('High-Quality Printer', 12500)">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://via.placeholder.com/250x150?text=Drone" alt="Drone" />
+        <h3>Advanced Drone</h3>
+        <p>Lightweight drone with HD camera and 30-minute flight time.</p>
+        <div class="product-price">₹24,999</div>
+        <button class="btn" onclick="addToCart('Advanced Drone', 24999)">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://via.placeholder.com/250x150?text=PlayStation" alt="PlayStation" />
+        <h3>PlayStation 5 Console</h3>
+        <p>Next-gen gaming console with stunning graphics and performance.</p>
+        <div class="product-price">₹45,000</div>
+        <button class="btn" onclick="addToCart('PlayStation 5 Console', 45000)">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="https://via.placeholder.com/250x150?text=Clothes" alt="Clothes" />
+        <h3>Trendy Clothes</h3>
+        <p>Comfortable and stylish apparel for all seasons.</p>
+        <div class="product-price">₹999</div>
+        <button class="btn" onclick="addToCart('Trendy Clothes', 999)">Add to Cart</button>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="cart" style="margin-top: 3rem;">
+    <h2>Your Cart</h2>
+    <div id="cart-items">No items in cart.</div>
+    <div id="cart-total" style="margin-top: 1rem; font-weight: bold;"></div>
+    <button class="btn" id="checkout-btn" style="display:none;" onclick="showPayment()">Checkout</button>
+  </section>
+
+  <section id="payment" class="payment" style="display:none;">
+    <h2>Payment Options</h2>
+    
+    <div>
+      <h3>PayPal</h3>
+      <div class="paypal-button">
+        <!-- PayPal Button Placeholder -->
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+          <input type="hidden" name="cmd" value="_xclick" />
+          <input type="hidden" id="paypal-item-name" name="item_name" value="" />
+          <input type="hidden" id="paypal-amount" name="amount" value="" />
+          <input type="hidden" name="currency_code" value="INR" />
+          <input type="submit" class="btn" value="Pay with PayPal" />
+        </form>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem;">
+      <h3>UPI Payment</h3>
+      <p>Please pay using your UPI app to the following UPI ID:</p>
+      <p style="font-size:1.2rem; font-weight: bold; color: #0d47a1;">7223924023@ybl</p>
+      <p>After payment, please email us at <a href="mailto:support@dronzersinc.com">support@dronzersinc.com</a> with your transaction ID and order details.</p>
+    </div>
+
+  </section>
+
+  <section id="contact" style="margin-top:3rem; text-align:center;">
+    <h2>Contact Us</h2>
+    <p>Email: <a href="mailto:support@dronzersinc.com">support@dronzersinc.com</a></p>
+    <p>Phone: +91 98765 43210</p>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 DRONZERS INC. All rights reserved.
+</footer>
+
+<script>
+  let cart = [];
+
+  function addToCart(name, price) {
+    const existing = cart.find(item => item.name === name);
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({name: name, price: price, qty: 1});
+    }
+    renderCart();
+  }
+
+  function renderCart() {
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    if (cart.length === 0) {
+      cartItems.innerHTML = 'No items in cart.';
+      cartTotal.innerHTML = '';
+      checkoutBtn.style.display = 'none';
+      return;
+    }
+
+    let html = '<ul>';
+    let total = 0;
+    cart.forEach(item => {
+      html += `<li>${item.name} x ${item.qty} — ₹${item.price * item.qty}</li>`;
+      total += item.price * item.qty;
+    });
+    html += '</ul>';
+    cartItems.innerHTML = html;
+    cartTotal.innerHTML = `Total: ₹${total.toFixed(2)}`;
+    checkoutBtn.style.display = 'inline-block';
+
+    // Update PayPal form details for checkout
+    document.getElementById('paypal-item-name').value = cart.map(i => i.name).join(', ');
+    document.getElementById('paypal-amount').value = total.toFixed(2);
+  }
+
+  function showPayment() {
+    document.getElementById('payment').style.display = 'block';
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
